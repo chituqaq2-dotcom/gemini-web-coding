@@ -22,6 +22,7 @@ Update NOTES.md with what changed and next steps.
 
 ## 常用短句
 - 只读：`READ-ONLY: do not delete, move, reset, clean or modify anything.`
+- 省 token：`Keep command output short (pipe through sort | head).`
 - 慢命令：`Run it in the background and read the output when done.`
 - 改完给我看：`Show me git diff before committing.`
 - 小步：`Make the smallest change that works, then run the tests.`
