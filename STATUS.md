@@ -15,7 +15,7 @@
 
 ## 挂着的事
 1. **shell 权限弹窗**：已定论，不再折腾。设置页的 shell 在重连后会被 Gemini 打回 Always ask，与工具标记无关（见 docs/05 第 24 条）。对策：提示词要求把逐项操作写成一个脚本一次跑完。
-2. **Gravity 清理第三步**：之前那段没跑过；21:15 用户确认旧 APK 不要，重新给本地 agent 指令（送 Windows 回收站，不碰 git，可与 Gemini 天气任务并行）。等回报。
+2. **Gravity 清理第三步：已关闭**（21:23 本地 agent 复核）。6 个未跟踪项（约 2.03G）当天早些时候已删过（见 Gravity 的 docs/gravity/清理候选.md），重发的指令全部跳过、没误删；4 个受跟踪素材目录保留；D 盘可用 81.13 GiB。剩一个未入库的 docs.zip（9.8MB，20:24 生成）待用户决定。教训：重发清理指令前先查清理记录。
 3. **额度读数共享**：已完成（2026-11-23 17:31）。油猴脚本 1.2.0 按标题分块解析，usage 页英文界面实测通过；只读接口已能读到读数（Hark 已接入并建了 Home 额度面板）。记账时先读接口，read_at 太旧就请用户刷新 usage 页。
 
 4. **newapi-checkin 清理**（2026-11-23 20:15）：第一到四步完成，项目 15G→2.5G；回收目录已由用户自己清空（2026-11-23 21:09 前）。worktree 清理完成（20:27，本地 agent）：删 56 个已合并 worktree，prune 1 条，实释放约 1.03 GiB，51 个分支全留；剩 8 条因有未提交改动跳过（password-recovery-20261117 21 改+3 新、repeat-refresh-fix-20261117、verification-reminder-20261117、validation-attention-2、stability-stage-baseline-20261105、window-page-cpu-baseline-20261107、stability-late-credentials-20261107 内外两条），待用户决定提交或丢弃；明细 logs/wt-analysis.csv、logs/wt-remove-result.csv。.secret/ 和 logs/implement-lemon-geetest-20261018 不动。
