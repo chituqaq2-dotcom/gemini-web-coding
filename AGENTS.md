@@ -33,6 +33,7 @@
 - 写明：工作目录（只限一个项目）、只读还是可改、先读哪些项目文档、交付格式。
 - 把项目自己的禁区（AGENTS.md、清理候选、约定文档里写的）原样写进提示词。
 - 加 `Keep command output short (pipe through sort | head).` 省额度。
+- shell 每次都可能弹 Allow（见 docs/05 第 24 条），所以要求它少调 shell：加 `Batch the work: write one script and run it in as few shell calls as possible.` 逐项循环（grep、lsof 等）写进同一个脚本里跑。
 - 推荐模式和思考强度：分析用 Chat + medium；改代码、难 bug 用 Chat + high；长且交代清楚的无人值守任务才用 Task。
 - 删除类任务两步走：先 READ-ONLY 出表，人看过后再发“移到回收目录”的指令，确认能构建再清空。
 - 按任务边界开新对话；续接靠项目里的交接文档（实测新对话和原对话续做花的额度差不多，见 docs/08）。
