@@ -3,7 +3,7 @@
 > 让 gemini.google.com 网页版（AI Pro / Ultra 订阅额度）直接读写你电脑上的项目、跑命令、跑测试。
 > 不走 API 计费，不逆向网页接口，用的是 Google 官方的 **Custom apps（自定义 MCP）** 功能。
 
-> **AI 助手 / agent：先读 [AGENTS.md（接手先读）和 [STATUS.md](STATUS.md)（现状与待办）](AGENTS.md)。** 那是本仓库的项目约定，照做即可接手。
+> **AI 助手 / agent：先读 [AGENTS.md](AGENTS.md)（项目约定），再读 [STATUS.md](STATUS.md)（现状与待办）。** 照做即可接手。
 
 这份仓库是一份实战笔记：从零部署、踩过的坑、怎么给 Gemini 发指令，都按真实经历写成。会随着使用持续更新。
 
