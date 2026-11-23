@@ -29,4 +29,4 @@
 - 用户不在意花 Gemini 额度（2026-11-23 20:17）：能一步做完就别拆。只有 Gemini 碰不到的（Windows 侧 git 等）才交本地 agent。
 
 ## 想法待评估（2026-11-23 21:48 用户提）
-- 让 Gemini 自己跑 Windows 侧的测试/打包，省掉人工中转。思路：给 runabout 加一个白名单包装（只允许在 Gravity 目录跑 build:workers、vitest、git status/diff/add/commit），经 WSL interop 调 powershell.exe。拦路：runabout 在容器里（无 interop、无外网）。比让 Gemini 调 Codex 更直接（Codex 还要联网和登录）。未验证，需本地 agent 先摸可行性。
+- 让 Gemini 自己跑 Windows 侧的测试/打包，省掉人工中转。思路：给 runabout 加一个白名单包装（只允许在 Gravity 目录跑 build:workers、vitest、git status/diff/add/commit），经 WSL interop 调 powershell.exe。拦路：runabout 在容器里（无 interop、无外网）。比让 Gemini 调 Codex 更直接（Codex 还要联网和登录）。未验证。21:50 用户：范围放宽到 D:\Projects，连同 runabout 外网一起做；已给 Codex 调查+实现指令（重启 runabout 前停一次问用户）。白名单只防手滑，不是安全边界（pnpm 脚本本身能跑任意代码）。
