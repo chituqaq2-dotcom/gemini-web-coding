@@ -27,3 +27,6 @@
 - 中文、简短、少停顿、少重复确认；小问题自己修，事后说。
 - 删除必须先出清单、人确认；密码和 token 只由用户本人输入。
 - 用户不在意花 Gemini 额度（2026-11-23 20:17）：能一步做完就别拆。只有 Gemini 碰不到的（Windows 侧 git 等）才交本地 agent。
+
+## 想法待评估（2026-11-23 21:48 用户提）
+- 让 Gemini 自己跑 Windows 侧的测试/打包，省掉人工中转。思路：给 runabout 加一个白名单包装（只允许在 Gravity 目录跑 build:workers、vitest、git status/diff/add/commit），经 WSL interop 调 powershell.exe。拦路：runabout 在容器里（无 interop、无外网）。比让 Gemini 调 Codex 更直接（Codex 还要联网和登录）。未验证，需本地 agent 先摸可行性。
