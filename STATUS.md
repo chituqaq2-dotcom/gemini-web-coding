@@ -20,6 +20,7 @@
 
 4. **newapi-checkin 清理**（2026-11-23 20:15）：第一到四步完成，项目 15G→2.5G；回收目录 /workspace/_trash/newapi-checkin-20261123{,-step2,-step3,-step4}/ 等 2026-11-24 09:00 签到正常后清空。剩：Windows 侧 worktree 清理（指令已交本地 agent），.secret/ 和 logs/implement-lemon-geetest-20261018 不动。
 6. **Gravity 功能修复开始**（2026-11-23 20:30）：bug1 天气只到城市级（深圳太大，宝安常报假雨）。已发 Gemini（新对话 Chat+high）：先诊断两个免费源，再支持填区名/手填坐标，守 docs/user-location.md 的隐私边界（只用手填，不读 GPS）。用户界面叫法全是中文，提示词里直接写界面原文即可。20:35 诊断：wttr.in 把 Shenzhen,Guangdong 解析到香港边马草垄报雨（假雨来源）；目标地点石岩（深圳宝安，22.686,113.941），同名石岩有 5 处、Shiyan 会落到十堰。提示词已更新为存坐标+省市校验。
+7. **待试：Gemini 侧 git fetch 测试**（用户 20:46 同意）：下次 Gemini 任务末尾加一句 `git fetch --dry-run`，看 WSL 里能否连 GitHub；能的话以后推拉可以不经本地 agent。
 5. **油猴脚本自动刷新**：已完成（2026-11-23 19:58 实测）。1.3.0：usage 页开着时每 5 分钟 reload 并上报，密钥缺失/无效时停。探查 RPC 方案放弃（要开 Chrome 远程调试，风险大）。read_at 即最后上报时间，用它判断读数新旧。
 
 ## 用户偏好速记
