@@ -24,6 +24,7 @@ Gemini 网页 (Neon)  ──HTTPS──>  Cloudflare Tunnel  ──>  runabout (
 | [05-踩坑记录](docs/05-踩坑记录.md) | 每个真实遇到的问题和解法 |
 | [06-维护](docs/06-维护.md) | 重启、看日志、更新 |
 | [07-实战经验](docs/07-实战经验.md) | 我们自己用下来的结论和额度账，按日期追加 |
+| [08-任务账本](docs/08-任务账本.md) | 每个任务的额度消耗和质量评分 |
 | [prompts/](prompts/) | 可直接复制的提示词（部署用、日常用、项目任务用） |
 
 ## 最重要的 6 条
@@ -34,6 +35,10 @@ Gemini 网页 (Neon)  ──HTTPS──>  Cloudflare Tunnel  ──>  runabout (
 4. **一个功能一个新对话**。对话越长越降智；用项目里的交接文件（`NOTES.md` 或现成的 AGENTS.md / docs）续接。
 5. **先只读分析、再动手**。危险操作写明 `READ-ONLY` / `Do not delete anything`，看完报告自己决定。
 6. **所有项目用 git，常推远端**。工具全开 Always allow 时，git 就是你的后悔药。
+
+## 给 AI 助手
+
+把这个仓库交给任何 AI，让它先读 [AGENTS.md](AGENTS.md)（项目约定），它就知道怎么帮你写提示词、怎么记账、怎么维护仓库。
 
 ## 免责
 
