@@ -30,6 +30,7 @@
 
 ## 3. 写 Gemini 提示词的规矩
 - 英文写，开头 `@runabout`，结尾 `Reply in Chinese.`；给一整段可直接复制的文本。
+  - 用户粘贴时：先在输入框打 @ 从菜单点 runabout（变成标签），再粘正文并删掉开头的 “@runabout ”；纯文本 @ 不一定绑上工具。
 - 写明：工作目录（只限一个项目）、只读还是可改、先读哪些项目文档、交付格式。
 - 把项目自己的禁区（AGENTS.md、清理候选、约定文档里写的）原样写进提示词。
 - 加 `Keep command output short (pipe through sort | head).` 省额度。
