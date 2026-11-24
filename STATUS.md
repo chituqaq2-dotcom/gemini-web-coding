@@ -41,5 +41,5 @@
 - 12:42 Codex：白名单引号误判修好、容器 git autocrlf 修好（15c60cc，未 push），重启后 29 项自测全过。下一步：Gemini 端实测（Neon/Chat/低/新对话）。
 - 12:51 Gemini 端实测全过：curl 200、mkdir/touch/cp 成功、Gravity git status 只剩 清理候选.md、rm 被拒且提示清楚。**runabout 外网修复关闭**。遗留：runabout 分支 fix/wsl-proxy-workspace-20261123 未合并进 runabout 主线（升级时会丢）；/workspace/.runabout-check 测试目录待清；依赖仍只能 Windows 跑。
 - 12:58 Codex：runabout 修复快进合并进本地 main（HEAD b581801，未 push），升级步骤改写在 deploy/WORKSPACE.md；正式镜像与代码一致，未重启，29 项自测再过。OpenWorldHint 补丁仍为未提交改动。.runabout-check 已挪到 D:\Projects\_trash\runabout-check-20261124（用户可自行清空）。
-- 2026-11-24 14:58 newapi 剩余项：Codex 只读盘点后用户确认，.secret/download、download1、8 个脏 worktree（均已合并、0 未推送）、deploy-lemon-geetest backup（133MiB）移到 D:\Projects\_trash\newapi-checkin-20261124；保留 logs/implement-lemon-geetest-20261018（6MiB 溯源）和 .secret/key.txt（待用户自己看）。等 Codex 回报。
+- 2026-11-24 14:58 newapi 剩余项：Codex 只读盘点后用户确认，.secret/download、download1、8 个脏 worktree（均已合并、0 未推送）、deploy-lemon-geetest backup（133MiB）移到 D:\Projects\_trash\newapi-checkin-20261124；保留 logs/implement-lemon-geetest-20261018（6MiB 溯源）和 .secret/key.txt（待用户自己看）。15:06 Codex 完成：10 项全移，204.68 MiB/5749 文件，git worktree list 只剩主工作区，51 分支全留，git status 干净，面板正常；MANIFEST 在回收目录根部。**newapi 清理关闭**，用户清空回收目录后才真正释放。不改历史文档里的旧路径引用（历史记录，无需改）。
 
