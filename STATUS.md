@@ -40,4 +40,5 @@
 - 注意：sed 不能原地改（-i 被拒），Gemini 改文件应走文件工具。
 - 12:42 Codex：白名单引号误判修好、容器 git autocrlf 修好（15c60cc，未 push），重启后 29 项自测全过。下一步：Gemini 端实测（Neon/Chat/低/新对话）。
 - 12:51 Gemini 端实测全过：curl 200、mkdir/touch/cp 成功、Gravity git status 只剩 清理候选.md、rm 被拒且提示清楚。**runabout 外网修复关闭**。遗留：runabout 分支 fix/wsl-proxy-workspace-20261123 未合并进 runabout 主线（升级时会丢）；/workspace/.runabout-check 测试目录待清；依赖仍只能 Windows 跑。
+- 12:58 Codex：runabout 修复快进合并进本地 main（HEAD b581801，未 push），升级步骤改写在 deploy/WORKSPACE.md；正式镜像与代码一致，未重启，29 项自测再过。OpenWorldHint 补丁仍为未提交改动。.runabout-check 已挪到 D:\Projects\_trash\runabout-check-20261124（用户可自行清空）。
 
