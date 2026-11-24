@@ -39,4 +39,5 @@
 - 09:44 Codex：白名单补 mkdir/cp/mv/touch/diff/sed/awk/xargs/tee/basename/dirname/realpath/tar/unzip、python3（仅跑工作区脚本，拒 -c/-m）；sed 禁原地改、awk 禁 system 等。提交 c43f8a6、56b2a76（未 push）。正式 runabout 已重启（镜像 runabout:workspace-proxy，healthy），容器内 27 项自测全过。下一步：Gemini 端实测出网+文件命令。
 - 注意：sed 不能原地改（-i 被拒），Gemini 改文件应走文件工具。
 - 12:42 Codex：白名单引号误判修好、容器 git autocrlf 修好（15c60cc，未 push），重启后 29 项自测全过。下一步：Gemini 端实测（Neon/Chat/低/新对话）。
+- 12:51 Gemini 端实测全过：curl 200、mkdir/touch/cp 成功、Gravity git status 只剩 清理候选.md、rm 被拒且提示清楚。**runabout 外网修复关闭**。遗留：runabout 分支 fix/wsl-proxy-workspace-20261123 未合并进 runabout 主线（升级时会丢）；/workspace/.runabout-check 测试目录待清；依赖仍只能 Windows 跑。
 
