@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Gemini auto-allow (runabout only)
 // @namespace    gemini-web-coding
-// @version      1.1.0
+// @version      1.1.1
 // @description  Auto-click "Always allow" on Gemini's tool-permission card, only for the runabout app. Works with the tab in the background.
 // @match        https://gemini.google.com/*
 // @run-at       document-idle
 // @grant        none
+// @noframes
 // @updateURL    https://raw.githubusercontent.com/chituqaq2-dotcom/gemini-web-coding/main/userscripts/gemini-auto-allow.user.js
 // @downloadURL  https://raw.githubusercontent.com/chituqaq2-dotcom/gemini-web-coding/main/userscripts/gemini-auto-allow.user.js
 // ==/UserScript==
@@ -95,7 +96,7 @@
     }
   }
 
-  log('loaded v1.1.0');
+  log('loaded v1.1.1');
   // Throttle: Gemini streams text, which fires many mutations.
   let pending = false;
   new MutationObserver(() => {
