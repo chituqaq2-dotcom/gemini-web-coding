@@ -17,3 +17,10 @@ Reply in Chinese.
 ```
 
 要测 pnpm 登记那套：让 Codex 在宿主跑 `workspace-project.py add <路径>` 并重启 runabout。容器里不能 rm，试完的目录交用户挪回收目录。
+
+## 加测 pnpm（试验场上线后，2c8c807 起）
+在上面指令第 5 步后插入：
+
+```
+6. In the same folder run: pnpm init, then pnpm add -D vitest. Write calc.vitest.test.mjs with the same 3 correct tests using vitest, add "test": "vitest run" to package.json scripts, then run pnpm test. Expect 3 pass.
+```
