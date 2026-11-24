@@ -30,3 +30,10 @@
 
 ## 想法待评估（2026-11-23 21:48 用户提）
 - 让 Gemini 自己跑 Windows 侧的测试/打包，省掉人工中转。思路：给 runabout 加一个白名单包装（只允许在 Gravity 目录跑 build:workers、vitest、git status/diff/add/commit），经 WSL interop 调 powershell.exe。拦路：runabout 在容器里（无 interop、无外网）。比让 Gemini 调 Codex 更直接（Codex 还要联网和登录）。未验证。21:50 用户：范围放宽到 D:\Projects，连同 runabout 外网一起做；Codex 调查+实现指令已写好（重启 runabout 前停一次问用户），但**先别发**：等天气收尾（Codex 部署→用户 App 验→Gemini 交接页）后再发，届时提醒用户。白名单只防手滑，不是安全边界（pnpm 脚本本身能跑任意代码）。
+
+## runabout 外网（2026-11-24 00:10 Codex 报告，未重启）
+- 原因：WSL 有代理变量，runabout 容器/进程没有（Compose 只给构建配了代理）；Windows 代理只监听回环，容器连不上。源码和近期日志里没有 PERMISSION_DENIED，原报错是否出自 Gemini 端未证实。
+- 修复：runabout 仓库分支 fix/wsl-proxy-workspace-20261123（43bc030，未 push）：独立代理转发服务 + 向容器注入代理变量；工作区限 D:\Projects（容器内 /workspace）；命令白名单（git 安全子命令、node 跑脚本、pnpm/npx 限定、curl、只读工具），无 PowerShell/cmd/WSL 互操作/Docker 接口。独立容器 11 项检查通过。
+- 隐患：白名单没有 mkdir/cp/mv/sed/python 等，Gemini 原来批量写脚本的做法会被拒；镜像没装 pnpm。白名单只管直接命令，项目脚本仍能改删 D:\Projects 内文件。
+- 09:07 建议用户：先确认没有 Gemini 任务在跑，让 Codex 补上常用文件命令再重启自测。
+
