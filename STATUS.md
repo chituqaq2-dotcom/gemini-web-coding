@@ -8,7 +8,7 @@
 ## 已就绪
 - **runabout**（用户 Windows 电脑，WSL2 Ubuntu-24.04 + Docker，源码 `~/runabout`，本地 main，未 push 到上游；重启会打断 Gemini 任务，先问用户）
   - 只挂载 D:\Projects → 容器内 `/workspace`；能出网（代理转发服务）；容器 git 设了 autocrlf=true、filemode=false（环境变量）。
-  - 对 Gemini 暴露的工具：read、shell（write 代码里有但未注册）。批量工具见待办第 1 条。
+  - 对 Gemini 暴露的工具（11-25 Codex 核对）：shell、shell_output、shell_kill、read、apply_patch、search、glob（write 代码里有但未注册）；批量工具已提交待重启，见待办第 1 条。
   - 命令白名单（防手滑，不是安全边界）：git 安全子命令、node/python3 只跑工作区脚本、pnpm/npx 限定、curl、mkdir/cp/mv/touch/diff/sed/awk/xargs/tee/tar/unzip、只读工具。**拒绝**：rm、rmdir、find -delete、shred、sed -i、python3 -c/-m、node -e、白名单外命令、/workspace 外路径、双引号里的 `$变量` 和反引号。复合命令任一段被拒整条不执行，报错指出哪一段。
   - **登记项目**（deploy/workspace-projects.yaml + workspace-project.py add/sync/list/render）：目前只有 Gravity，只能跑 `pnpm run test:run -- <文件>`（别跑全量，约 1467 个文件）和 `pnpm run build:workers`；依赖变了由宿主跑 `workspace-project.py sync`。容器里 build:workers 会改动已跟踪的 worker/amsg/worker.bundle.js（路径注释），提交前还原。
   - **`/workspace/_sandbox/<子目录>` 试验场**：不用登记不用重启，Gemini 可自己 `pnpm init/install/add/run/test`（install/add 必须显式带 `--ignore-scripts`，否则被拒；dlx/exec/-g/试验场外拒绝），`node --version`、`node <文件>`、`node --test <文件>`（文件须在本试验项目内）。node_modules 是 Linux 格式，Windows 侧别用。
@@ -18,7 +18,7 @@
 - **自动点 Allow 脚本** userscripts/gemini-auto-allow.user.js 1.1.1（Tampermonkey，按 @updateURL 自动更新）：只点 runabout 卡片的 Always allow。1.0 实测没点；1.1.x 尚未在真实权限卡上验证。失败时请用户贴控制台 `[auto-allow]` 开头的日志。每次点击算一轮额度。
 
 ## 待办（按优先级）
-1. **runabout 批量工具**（11-25）：Codex 已写好 write_files（本机路径，复用 CheckWrite，≤20 个/1MB，先全量校验再写）、read_files（≤20 个）、run_commands（≤10 条，逐条过白名单，stop_on_error，整批超时 3 倍），注册进工具列表并写了单测。卡在：Go 工具链下载两次半截断（curl 18），gofmt/vet/test 都没跑、未 commit。下一步：让 Codex 用本机已有 golang 镜像跑测试（指令已给用户）→ 本地 commit → 用户确认后重启 → Gemini 用批量工具重做一个多文件任务，对比工具调用次数和额度。
+1. **runabout 批量工具**（11-25）：Codex 已写好 write_files（本机路径，复用 CheckWrite，≤20 个/1MB，先全量校验再写）、read_files（≤20 个）、run_commands（≤10 条，逐条过白名单，stop_on_error，整批超时 3 倍），注册进工具列表并写了单测。已本地提交 3ed1fd2（用本机 golang 1.25 镜像测：gofmt、go vet 通过，internal/tools 113/113；internal 全量另有 1 个既有失败 TestConfirms，root 下 $HOME/.. 判 deny，与本次无关）。下一步：重启（`deploy/workspace-compose.sh up -d --build`，注意 Node 层下载可能卡）→ smoke + 外网 healthz → Gemini 设置页确认 runabout 仍已连接 → Gemini 用批量工具重做一个多文件任务，对比工具调用次数和额度。
 2. 自动点 Allow 1.1.1 在真实权限卡上验证。
 3. 试验场下一步可试：Task 模式长任务能否跑更久；`git fetch --dry-run` 能否直连 GitHub（能的话简单推拉可不经 Codex）。
 4. 把试验场项目升级为登记项目需要宿主侧 `workspace-project.py add` + 重启，做之前问用户。
