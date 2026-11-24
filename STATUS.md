@@ -1,9 +1,9 @@
 # 现状与待办（接手时先看这里）
 
-最后更新：2026-11-24 15:30（北京时间）。11-23～24 的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
+最后更新：2026-11-24 17:41（北京时间）。11-23～24 的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
 
 ## 一句话现状
-整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 改代码；Windows 侧测试/提交/部署交本地 agent（Codex）；我（Hark）写指令、判结果、记账、维护本仓库。目前**没有进行中的任务**。
+整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 改代码；Windows 侧测试/提交/部署交本地 agent（Codex）；我（Hark）写指令、判结果、记账、维护本仓库。进行中：Gemini 容器内自测（多项目通用），见挂着的事第 8 条。
 
 ## 已就绪
 - **runabout**（用户 Windows 电脑，WSL2 Ubuntu-24.04 + Docker，源码 `~/runabout`，本地 main HEAD b581801，未 push 到上游）
@@ -25,7 +25,7 @@
 5. 待试：Gemini 用 Task 模式做一个交代清楚的长任务，看能否比 Chat 跑更久、额度如何。
 6. 待试：Gemini 在 runabout 里 `git fetch --dry-run` 连 GitHub（现在能出网了，大概率可行）；行的话简单推拉可不经 Codex。
 7. 想法：让 Gemini 直接跑 Windows 侧测试（经 runabout 调 powershell）——**暂不做**，runabout 已刻意不开 Windows 互操作；需要时重新评估安全。
-8. **进行中**（2026-11-24 15:30 用户同意，指令已交 Codex，重启前会停下问）：给 runabout 容器装 Node+pnpm、另放一份 Linux 依赖（不碰 Windows 的 node_modules，esbuild/rollup 有平台二进制），让 Gemini 改完自己跑测试。push/发布不做（令牌放进 Gemini 能碰的容器有泄露风险），APK 不做（要安卓 SDK），仍交 Codex。15:33 用户要求多项目通用：按配置文件列项目、每个项目一个脚本建 Linux 依赖卷+白名单；Codex 先接 Gravity，并扫 D:\Projects 列出其它有测试的项目（只列不接）。
+8. **进行中**（2026-11-24 15:30 用户同意，指令已交 Codex，重启前会停下问）：给 runabout 容器装 Node+pnpm、另放一份 Linux 依赖（不碰 Windows 的 node_modules，esbuild/rollup 有平台二进制），让 Gemini 改完自己跑测试。push/发布不做（令牌放进 Gemini 能碰的容器有泄露风险），APK 不做（要安卓 SDK），仍交 Codex。15:33 用户要求多项目通用：按配置文件列项目、每个项目一个脚本建 Linux 依赖卷+白名单；Codex 先接 Gravity，并扫 D:\Projects 列出其它有测试的项目（只列不接）。17:41 用户：Codex 仍在做，尚无回报；回报到了再更新这里。
 
 ## 用户偏好速记（全文见 docs/09）
 - 中文、简短、先结论；少停顿、少确认；小问题自己修、事后说。
