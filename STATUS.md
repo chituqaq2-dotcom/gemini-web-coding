@@ -25,7 +25,7 @@
 5. 待试：Gemini 用 Task 模式做一个交代清楚的长任务，看能否比 Chat 跑更久、额度如何。
 6. 待试：Gemini 在 runabout 里 `git fetch --dry-run` 连 GitHub（现在能出网了，大概率可行）；行的话简单推拉可不经 Codex。
 7. 想法：让 Gemini 直接跑 Windows 侧测试（经 runabout 调 powershell）——**暂不做**，runabout 已刻意不开 Windows 互操作；需要时重新评估安全。
-8. **进行中**（2026-11-24 15:30 用户同意，指令已交 Codex，重启前会停下问）：给 runabout 容器装 Node+pnpm、另放一份 Linux 依赖（不碰 Windows 的 node_modules，esbuild/rollup 有平台二进制），让 Gemini 改完自己跑测试。push/发布不做（令牌放进 Gemini 能碰的容器有泄露风险），APK 不做（要安卓 SDK），仍交 Codex。15:33 用户要求多项目通用：按配置文件列项目、每个项目一个脚本建 Linux 依赖卷+白名单；Codex 先接 Gravity，并扫 D:\Projects 列出其它有测试的项目（只列不接）。17:41 用户：Codex 仍在做，尚无回报；回报到了再更新这里。 18:49：Codex 跑了一下午没收尾（中途模型多次 capacity 报错、换到 DeepSeek V4.1 Flash）。已完成大半：通用项目清单+workspace-project.py、镜像装 Node/pnpm、预检容器里装好 Linux 依赖并跑完全量测试（1467 文件，25～26 个失败，正在逐个和 Windows 对比）。注意：之前指令写的“14 文件 136 条”只是天气子集，全量本来就多，验收应改为“容器失败集 ⊆ Windows 失败集”。用户换更强模型接手，交接指令要求先看 ~/runabout 未提交改动、别重来。
+8. **进行中：容器自测**（2026-11-24 19:52 Codex/GLM-5.3 完成实现，等用户同意重启正式 runabout）。runabout 本地 main b46d845（未 push）：项目清单 deploy/workspace-projects.yaml + 接入脚本 deploy/workspace-project.py（add/sync/list/render）、命名卷依赖隔离、Node 22.23.5 + pnpm 10.11.0、白名单只允许登记目录跑登记脚本（禁 install/add/remove/exec/dlx）。已接 Gravity，Gemini 可用：`pnpm run test:run -- <文件>`、`pnpm run build:workers`。预检：go test/build、smoke、build:workers 全过；Gravity 全量 1467 文件 25 失败，其中 19 个 Windows 也失败（原有），6 个仅容器失败待查（blobRefHook.contract、contextUpstream、gravityBackup、homeAutonomyHook、upstreamFormat、wardrobePickerUI）。Windows node_modules 未动；D:\Projects\.pnpm-store 挪到 _trash。其它可接项目清单见 runabout deploy/WORKSPACE.md / Codex 汇报（低难度：gemini-quota、PiManager、Sentinel-One、minitool2api、kiro2api(Go)、newapi-checkin/frontend）。下一步：重启 → 正式 smoke + 天气测试 → Gemini 网页实测一次。
 
 ## 用户偏好速记（全文见 docs/09）
 - 中文、简短、先结论；少停顿、少确认；小问题自己修、事后说。
