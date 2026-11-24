@@ -27,6 +27,8 @@ Gemini 网页 (Neon)  ──HTTPS──>  Cloudflare Tunnel  ──>  runabout (
 | [06-维护](docs/06-维护.md) | 重启、看日志、更新 |
 | [07-实战经验](docs/07-实战经验.md) | 我们自己用下来的结论和额度账，按日期追加 |
 | [08-任务账本](docs/08-任务账本.md) | 每个任务的额度消耗和质量评分 |
+| [09-用户习惯](docs/09-用户习惯.md) | 用户的沟通偏好、分工、删除规矩（给接手 agent） |
+| [history/](docs/history/) | 旧的 STATUS 流水，查细节用 |
 | [prompts/](prompts/) | 可直接复制的提示词（部署用、日常用、项目任务用） |
 
 ## 最重要的 6 条
