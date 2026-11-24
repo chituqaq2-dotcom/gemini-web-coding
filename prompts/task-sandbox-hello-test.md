@@ -24,3 +24,17 @@ Reply in Chinese.
 ```
 6. In the same folder run: pnpm init, then pnpm add -D vitest. Write calc.vitest.test.mjs with the same 3 correct tests using vitest, add "test": "vitest run" to package.json scripts, then run pnpm test. Expect 3 pass.
 ```
+
+## 第三版（2026-11-24 跑通，已修三个坑）
+```
+@runabout You have shell and apply_patch tools from this app. Use them; do not answer from memory. Create a tiny test project in /workspace/_sandbox/<new-dir> and touch nothing outside it.
+1. Create the folder and work only there (cd into it for every shell command).
+2. Write calc.mjs exporting add(a, b) and divide(a, b) (divide throws on b === 0).
+3. Write calc.node-test.mjs using only node:test and node:assert: add, divide, divide by zero throws, and one deliberately wrong test (expect add(1, 1) to be 3).
+4. Run node --test calc.node-test.mjs. Expect 3 pass, 1 fail. Fix the wrong test and run again. Expect 4 pass.
+5. Run pnpm init, then pnpm add -D --ignore-scripts vitest in the background and poll its output until it finishes.
+6. Write calc.vitest.test.mjs with the 3 correct tests, set "test": "vitest run calc.vitest.test.mjs" in package.json, run pnpm test. Expect 3 pass.
+Rules: if a file already exists, edit it with Update File. Run each command at most twice. Quote any tool error exactly.
+Report in 5 lines: files, node test runs, pnpm install, vitest, tool errors.
+Reply in Chinese.
+```
