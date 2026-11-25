@@ -3,7 +3,7 @@
 最后更新：2026-11-25 09:50（北京时间）。更早的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
 
 ## 一句话现状
-整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 写代码、跑测试；Windows/WSL 侧的改动交本地 agent（Codex）；Hark 写指令、判结果、读额度、记账、维护本仓库。当前主线：在 `_sandbox` 试验场里一步步验证 Gemini 能独立写代码和自测（四轮已过，见 docs/08），下一步给 runabout 加批量工具，缓解单轮工具调用上限。
+整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 写代码、跑测试；Windows/WSL 侧的改动交本地 agent（Codex）；Hark 写指令、判结果、读额度、记账、维护本仓库。当前主线：在 `_sandbox` 试验场里一步步验证 Gemini 能独立写代码和自测（六轮已过，见 docs/08），批量工具已上线并实测通过（第七版一轮 6 次调用），下一步用真实项目任务积累样本。
 
 ## 已就绪
 - **runabout**（用户 Windows 电脑，WSL2 Ubuntu-24.04 + Docker，源码 `~/runabout`，本地 main，未 push 到上游；重启会打断 Gemini 任务，先问用户）
@@ -19,7 +19,7 @@
 - **自动点 Allow 脚本** userscripts/gemini-auto-allow.user.js 1.1.1（Tampermonkey，按 @updateURL 自动更新）：只点 runabout 卡片的 Always allow。1.0 实测没点；1.1.x 尚未在真实权限卡上验证。失败时请用户贴控制台 `[auto-allow]` 开头的日志。每次点击算一轮额度。
 
 ## 待办（按优先级）
-1. **runabout 批量工具**（11-25）：Codex 已写好 write_files（本机路径，复用 CheckWrite，≤20 个/1MB，先全量校验再写）、read_files（≤20 个）、run_commands（≤10 条，逐条过白名单，stop_on_error，整批超时 3 倍），注册进工具列表并写了单测。已上线：本地提交 3ed1fd2，11-25 01:2x 正常 compose 重建重启（Node 层约 4 分钟，没走备用方案），smoke 34/34，外网 healthz 200。（用本机 golang 1.25 镜像测：gofmt、go vet 通过，internal/tools 113/113；internal 全量另有 1 个既有失败 TestConfirms，root 下 $HOME/.. 判 deny，与本次无关）。本地直连 /mcp 会 401（要 OAuth），所以批量工具的实测交给 Gemini：试手第七版（hello-test5，与第六版同题，对比调用次数和额度） → Gemini 用批量工具重做一个多文件任务，对比工具调用次数和额度。
+1. **runabout 批量工具**（11-25）：Codex 已写好 write_files（本机路径，复用 CheckWrite，≤20 个/1MB，先全量校验再写）、read_files（≤20 个）、run_commands（≤10 条，逐条过白名单，stop_on_error，整批超时 3 倍），注册进工具列表并写了单测。已上线：本地提交 3ed1fd2，11-25 01:2x 正常 compose 重建重启（Node 层约 4 分钟，没走备用方案），smoke 34/34，外网 healthz 200。（用本机 golang 1.25 镜像测：gofmt、go vet 通过，internal/tools 113/113；internal 全量另有 1 个既有失败 TestConfirms，root 下 $HOME/.. 判 deny，与本次无关）。本地直连 /mcp 会 401（要 OAuth），Gemini 实测已过（第七版：一轮 6 次调用，6%，见 docs/08）。小缺口：试验场白名单不含 `pnpm pkg`，Gemini 会绕道 apply_patch，要加需改白名单并重启。
 2. 自动点 Allow 1.1.1 在真实权限卡上验证。
 3. 试验场下一步可试：Task 模式长任务能否跑更久；`git fetch --dry-run` 能否直连 GitHub（能的话简单推拉可不经 Codex）。
 4. 把试验场项目升级为登记项目需要宿主侧 `workspace-project.py add` + 重启，做之前问用户。
