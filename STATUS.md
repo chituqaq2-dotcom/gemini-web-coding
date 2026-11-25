@@ -1,9 +1,9 @@
 # 现状与待办（接手时先看这里）
 
-最后更新：2026-11-25 09:50（北京时间）。更早的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
+最后更新：2026-11-25 11:15（北京时间）。更早的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
 
 ## 一句话现状
-整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 写代码、跑测试；Windows/WSL 侧的改动交本地 agent（Codex）；Hark 写指令、判结果、读额度、记账、维护本仓库。当前主线：在 `_sandbox` 试验场里一步步验证 Gemini 能独立写代码和自测（六轮已过，见 docs/08），批量工具已上线并实测通过（第七版一轮 6 次调用），下一步用真实项目任务积累样本。
+整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 写代码、跑测试；Windows/WSL 侧的改动交本地 agent（Codex）；Hark 写指令、判结果、读额度、记账、维护本仓库。当前主线：在 `_sandbox` 试验场里一步步验证 Gemini 能独立写代码和自测（六轮已过，见 docs/08），批量工具已上线并实测通过（第七版一轮 6 次调用），下一步用真实项目任务积累样本：第一个是用户的 Crescendo-Bid（投标文件工具，私有项目），11-25 Gemini 已做完只读诊断（2 轮共 36 次调用、10%），等 runabout 放开后让它直接改代码。Gemini 网页全局指令 11-25 已存，提示词只写任务。
 
 ## 已就绪
 - **runabout**（用户 Windows 电脑，WSL2 Ubuntu-24.04 + Docker，源码 `~/runabout`，本地 main，未 push 到上游；重启会打断 Gemini 任务，先问用户）
