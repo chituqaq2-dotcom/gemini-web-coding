@@ -15,7 +15,7 @@
   - 隧道：cloudflared 钉版本 + `--protocol http2`（11-25 修偶发 URL_UNREACHABLE，runabout 本地提交，只重启了隧道容器）。观察是否复发。
   - smoke 前置：需要 /workspace/_sandbox/node-check 目录存在（11-25 重启时缺失导致 smoke 首次失败）。
   - 升级：按 runabout 的 deploy/WORKSPACE.md（fetch → rebase origin/main → 重建 → 跑 smoke）。注意：11-24 那次镜像是把新 Go 二进制换进现有镜像，暂不能从 Dockerfile 原样重建；下次正常 build 要确认 Node 层能下完。
-- **额度读数**：油猴脚本把 usage 页读数推到只读接口 `/latest`（地址和密钥不在本仓库），Hark 任务后自己读（规则见 docs/09 末节），Hark Home 有每小时刷新的额度面板。
+- **额度读数**：油猴脚本把 usage 页读数推到只读接口 `/latest`（地址和密钥不在本仓库），Hark 任务后自己读（规则见 docs/09 末节），Hark Home 有额度面板（每分钟读同一个只读接口，不登录 Google）。链路搭法和修法见 docs/06“额度读数链路”。
 - **自动点 Allow 脚本** userscripts/gemini-auto-allow.user.js 1.1.1（Tampermonkey，按 @updateURL 自动更新）：只点 runabout 卡片的 Always allow。1.0 实测没点；1.1.x 尚未在真实权限卡上验证。失败时请用户贴控制台 `[auto-allow]` 开头的日志。每次点击算一轮额度。
 
 ## 待办（按优先级）
