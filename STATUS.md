@@ -20,7 +20,7 @@
 
 ## 待办（按优先级）
 1. **Crescendo-Bid 收尾**（11-25 16:28 已发 Codex 指令；17:01 用户说**已跑完**，结果在用户手里、还没交给 Hark——接手后先向用户要 Codex 的汇报）：Windows 上 `npm --prefix apps/crescendo run build`（含类型检查）+ 用项目 Windows 虚拟环境（Py3.14）分批跑相关测试 + 启动桌面端。结果回来后：用户点界面验收（A 待填空“写入当前稿”按钮；B PDF 招标补传 Word 入口与不一致 409 弹窗；C 技术部分“保存到本项目”与状态标签；D 投标前检查的“分册 / 压缩”按钮和“AI 对照最新稿查漏”区块）。有类型错误或失败就开新 Gemini 对话修。验收过后：开新对话一次性更新项目自己的文档（status、next、功能文档、链接检查，思考 medium），再由用户决定合并与推送。诊断报告在 `_sandbox/crescendo-diagnosis.md`（第 7 节断点，第 8–11 节各修复）。
-2. **对话导出脚本**（11-25 Gemini 完成，基于开源 dikelps/gemini-conversation-exporter MIT 小改，`_sandbox/gemini-export`，本地提交 b4b5727，6 项单测过）：11-25 小改后（9f4beb2，0.1.8-local.2，9 项单测过）用户实测修复 C、D 两个长对话：轮次与“继续”一一对应，“始终允许”轮已合并、占位链接已清干净。发已备好的 Codex 指令，把它和 `gemini-quota`（额度脚本+Worker，先提交未提交的修复，基线 5282a0f 之后）挪到 `D:\Projects\scripts\tampermonkey\` 下各一个子目录（用户定的结构：scripts 下按类型分）。注意：导出里“始终允许”点击会作为单独的用户轮出现。
+2. **对话导出脚本**（11-25 Gemini 完成，基于开源 dikelps/gemini-conversation-exporter MIT 小改，`_sandbox/gemini-export`，本地提交 b4b5727，6 项单测过）：11-25 小改后（9f4beb2，0.1.8-local.2，9 项单测过）用户实测修复 C、D 两个长对话：轮次与“继续”一一对应，“始终允许”轮已合并、占位链接已清干净。下一步把它和 `gemini-quota`（额度脚本+Worker）挪到 `D:\Projects\scripts\tampermonkey\` 下各一个子目录（用户定的结构：scripts 下按类型分）。
    - 挪目录（11-25 17:12 进行中）：Codex 把导出脚本和额度脚本挪进用户的脚本目录下专放油猴脚本的子目录。第一次因停止规则太严没开工，已给续做指令。下次先问用户 Codex 的汇报：挪完没有、额度脚本 npm test 15 项是否通过。
 3. **runabout 记录每次工具调用 + 修 `read_files` 多路径只回最后一个文件**：一起交 Codex，要重建重启，先问用户。Gemini 单轮上限 10–36 次不等，有了日志才好查。
 4. runabout 本地未推送提交（27cc420、3ed1fd2、509a978、9aeee08）：问用户是否推送（容器无凭据，需 Codex 或用户推）。
