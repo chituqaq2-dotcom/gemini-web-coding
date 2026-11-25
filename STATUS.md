@@ -23,8 +23,9 @@
 2. **runabout 记录每次工具调用**：11-25 发现 Gemini 单轮上限有时 13–15 次撞、有时 30 次不撞，runabout 标准输出不记调用，查不了。让 Codex 查数据卷有无调用记录，没有就加（时间、工具、条目数、输出字节）。
 3. 自动点 Allow 1.1.1 在真实权限卡上验证。
 4. 试验场下一步可试：Task 模式长任务能否跑更久。
-5. Gravity 6 个仅容器失败的测试（blobRefHook.contract、contextUpstream、gravityBackup、homeAutonomyHook、upstreamFormat、wardrobePickerUI，清单在 runabout deploy/WORKSPACE.md）：未查；用户说试验阶段别把 Gravity 拉进来。
-6. Gravity 手机 APK：下次打包时带上天气修复（网页已上线，11-23 验收）。
+5. **中文提示词实验**（11-25 用户提议）：下一个新对话改用中文写提示词，对比英文时的执行质量、调用次数、额度；没差别就以后都用中文（顺便解决回复语言）。
+6. Gravity 6 个仅容器失败的测试（blobRefHook.contract、contextUpstream、gravityBackup、homeAutonomyHook、upstreamFormat、wardrobePickerUI，清单在 runabout deploy/WORKSPACE.md）：未查；用户说试验阶段别把 Gravity 拉进来。
+7. Gravity 手机 APK：下次打包时带上天气修复（网页已上线，11-23 验收）。
 
 ## 等用户自己处理（不用催）
 - `_sandbox` 里的旧试验目录 hello-test、pnpm-check、hello-test2、hello-test3、hello-test4，可挪进回收目录。
