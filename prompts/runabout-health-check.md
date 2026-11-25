@@ -12,4 +12,4 @@ Do not change anything else. Keep the output short.
 Reply in Chinese.
 ```
 
-期望（2026-11-24 实测）：200；列出 a.txt、b.txt；与 Windows 侧一致的 git status；rm 被拒并说明“不在开发白名单内”。测完让 Codex 把 .runabout-check 挪进回收目录。
+期望（2026-11-24 实测）：200；列出 a.txt、b.txt；与 Windows 侧一致的 git status；rm 被拒并说明“不在开发白名单内”（11-25 放开后 rm 会成功，这一项改为确认能删掉自己建的测试文件）。测完让 Codex 把 .runabout-check 挪进回收目录。
