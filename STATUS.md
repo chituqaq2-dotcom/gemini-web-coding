@@ -1,6 +1,6 @@
 # 现状与待办（接手时先看这里）
 
-最后更新：2026-11-25 17:45（北京时间）。更早的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
+最后更新：2026-11-25 17:50（北京时间）。更早的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
 
 ## 一句话现状
 整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 写代码、跑测试；Windows/WSL 侧的改动交本地 agent（Codex）；Hark 写指令、判结果、读额度、记账、维护本仓库。11-25 用真实项目 Crescendo-Bid（私有）跑通了“大项目修多处问题”的完整玩法（AGENTS.md §3）：诊断 → 4 个修复各开新对话、先调研后落代码 → 分支 `fix/section7-breaks` 本地 6 个提交（47bd02b、548f6ee、8f1f49e、1671db4、aa9e2e4、c48e818），每个修复相关测试都在容器里跑通，打分 80–92（docs/08）。Codex 已在 Windows 构建、120 个相关测试全过并启动，现在等用户点界面验收。同日还验证了：中文提示词可行（已改为默认）、两个 Gemini 对话可并发做不同项目、Gemini 能独立选型并改造一个油猴脚本（对话导出）。
@@ -20,8 +20,7 @@
 
 ## 待办（按优先级）
 1. **Crescendo-Bid 收尾**：11-25 17:41 Codex 汇报 Windows 侧全部通过——分支 `fix/section7-breaks` HEAD c48e818 不变；前端 TS + 打包 + 指纹通过（dist 改动保留未提交；警告：Node 20.17 低于 Vite 要求、主包偏大）；项目 .venv（Py 3.14.6）五批相关测试 120 passed / 0 failed；用独立验收空库 `--no-window` 启动在 127.0.0.1:18766，验收日志在 Crescendo 的 `.evaluation/windows-acceptance-20261125-c48e818`。**现在等用户点界面验收**：A 待填空“写入当前稿”按钮；B PDF 招标补传 Word 入口与不一致 409 弹窗；C 技术部分“保存到本项目”与状态标签；D 投标前检查的“分册 / 压缩”按钮和“AI 对照最新稿查漏”区块。有问题开新 Gemini 对话修。验收过后：开新对话一次性更新项目自己的文档（status、next、功能文档、链接检查，思考 medium），再由用户决定合并与推送。诊断报告在 `_sandbox/crescendo-diagnosis.md`（第 7 节断点，第 8–11 节各修复）。以后 Windows 构建改用 D:\Program Files\DevTools\nodejs（26.x），别用 nvm 的 20.17。
-2. **对话导出脚本**（11-25 Gemini 完成，基于开源 dikelps/gemini-conversation-exporter MIT 小改，`_sandbox/gemini-export`，本地提交 b4b5727，6 项单测过）：11-25 小改后（9f4beb2，0.1.8-local.2，9 项单测过）用户实测修复 C、D 两个长对话：轮次与“继续”一一对应，“始终允许”轮已合并、占位链接已清干净。下一步把它和 `gemini-quota`（额度脚本+Worker）挪到 `D:\Projects\scripts\tampermonkey\` 下各一个子目录（用户定的结构：scripts 下按类型分）。
-   - 挪目录（11-25 17:12 进行中）：Codex 把导出脚本和额度脚本挪进用户的脚本目录下专放油猴脚本的子目录。第一次因停止规则太严没开工，已给续做指令。下次先问用户 Codex 的汇报：挪完没有、额度脚本 npm test 15 项是否通过。
+2. **油猴脚本目录统一（11-25 17:42 完成）**：对话导出脚本 `gemini-export`（基于开源 dikelps/gemini-conversation-exporter MIT 小改，0.1.8-local.2，本地提交 9f4beb2；实测长对话轮次与“继续”一一对应、“始终允许”轮已合并）和额度脚本+Worker `gemini-quota`（本地提交 d3bcb96）已挪到 `D:\Projects\scripts\tampermonkey\` 各一个子目录，Git 历史完整，文件数/字节数前后一致；迁移后 quota `npm test` 15/15、export 9/9 通过。`gemini-export/eval/` 挪进回收目录 `_trash\gemini-export-eval-20261125`。两个 README 的路径改动**未提交**，下次给 Codex 指令时顺带提交。没发现其他独立油猴项目。
 3. **runabout 记录每次工具调用 + 修 `read_files` 多路径只回最后一个文件**：一起交 Codex，要重建重启，先问用户。Gemini 单轮上限 10–36 次不等，有了日志才好查。
 4. runabout 本地未推送提交（27cc420、3ed1fd2、509a978、9aeee08）：问用户是否推送（容器无凭据，需 Codex 或用户推）。
 5. 自动点 Allow 1.1.1 在真实权限卡上验证。
