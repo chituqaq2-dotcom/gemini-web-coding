@@ -1,9 +1,9 @@
 # 现状与待办（接手时先看这里）
 
-最后更新：2026-11-25 11:55（北京时间）。更早的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
+最后更新：2026-11-25 16:50（北京时间）。更早的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
 
 ## 一句话现状
-整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 写代码、跑测试；Windows/WSL 侧的改动交本地 agent（Codex）；Hark 写指令、判结果、读额度、记账、维护本仓库。当前主线：在 `_sandbox` 试验场里一步步验证 Gemini 能独立写代码和自测（六轮已过，见 docs/08），批量工具已上线并实测通过（第七版一轮 6 次调用），下一步用真实项目任务积累样本：第一个是用户的 Crescendo-Bid（投标文件工具，私有项目），11-25 Gemini 已做完只读诊断（2 轮共 36 次调用、10%），runabout 已放开，可直接改代码。Gemini 网页全局指令 11-25 已存，提示词只写任务。
+整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 写代码、跑测试；Windows/WSL 侧的改动交本地 agent（Codex）；Hark 写指令、判结果、读额度、记账、维护本仓库。11-25 用真实项目 Crescendo-Bid（私有）跑通了“大项目修多处问题”的完整玩法（AGENTS.md §3）：诊断 → 4 个修复各开新对话、先调研后落代码 → 分支 `fix/section7-breaks` 本地 6 个提交（47bd02b、548f6ee、8f1f49e、1671db4、aa9e2e4、c48e818），每个修复相关测试都在容器里跑通，打分 80–92（docs/08）。现在等 Codex 在 Windows 构建前端、补跑测试、启动，然后用户点界面验收。同日还验证了：中文提示词可行（已改为默认）、两个 Gemini 对话可并发做不同项目、Gemini 能独立选型并改造一个油猴脚本（对话导出）。
 
 ## 已就绪
 - **runabout**（用户 Windows 电脑，WSL2 Ubuntu-24.04 + Docker，源码 `~/runabout`，本地 main，未 push 到上游；重启会打断 Gemini 任务，先问用户）
@@ -19,16 +19,18 @@
 - **自动点 Allow 脚本** userscripts/gemini-auto-allow.user.js 1.1.1（Tampermonkey，按 @updateURL 自动更新）：只点 runabout 卡片的 Always allow。1.0 实测没点；1.1.x 尚未在真实权限卡上验证。失败时请用户贴控制台 `[auto-allow]` 开头的日志。每次点击算一轮额度。
 
 ## 待办（按优先级）
-1. **Crescendo-Bid 行动 1**（用户私有项目，11-25 诊断完）：修 4 个真断点。权限已放开，Gemini 可直接改；等用户定路线后给提示词。
-2. **runabout 记录每次工具调用**：11-25 发现 Gemini 单轮上限有时 13–15 次撞、有时 30 次不撞，runabout 标准输出不记调用，查不了。让 Codex 查数据卷有无调用记录，没有就加（时间、工具、条目数、输出字节）。
-3. **runabout `read_files` 多路径只返回最后一个文件**（11-25 Gemini 修复 A 时发现）：让 Codex 修并加测试，修好要重建重启（先问用户）。可和第 2 条一起做。
-4. 自动点 Allow 1.1.1 在真实权限卡上验证。
-5. 试验场下一步可试：Task 模式长任务能否跑更久。
-6. **中文提示词实验**（11-25 用户提议；第一个样本修复 A：中文回复、质量不输英文，再看两三个）：下一个新对话改用中文写提示词，对比英文时的执行质量、调用次数、额度；没差别就以后都用中文（顺便解决回复语言）。
-7. Gravity 6 个仅容器失败的测试（blobRefHook.contract、contextUpstream、gravityBackup、homeAutonomyHook、upstreamFormat、wardrobePickerUI，清单在 runabout deploy/WORKSPACE.md）：未查；用户说试验阶段别把 Gravity 拉进来。
+1. **Crescendo-Bid 收尾**（11-25 16:28 已发 Codex 指令，16:45 仍在跑）：Windows 上 `npm --prefix apps/crescendo run build`（含类型检查）+ 用项目 Windows 虚拟环境（Py3.14）分批跑相关测试 + 启动桌面端。结果回来后：用户点界面验收（A 待填空“写入当前稿”按钮；B PDF 招标补传 Word 入口与不一致 409 弹窗；C 技术部分“保存到本项目”与状态标签；D 投标前检查的“分册 / 压缩”按钮和“AI 对照最新稿查漏”区块）。有类型错误或失败就开新 Gemini 对话修。验收过后：开新对话一次性更新项目自己的文档（status、next、功能文档、链接检查，思考 medium），再由用户决定合并与推送。诊断报告在 `_sandbox/crescendo-diagnosis.md`（第 7 节断点，第 8–11 节各修复）。
+2. **对话导出脚本**（11-25 Gemini 完成，基于开源 dikelps/gemini-conversation-exporter MIT 小改，`_sandbox/gemini-export`，本地提交 b4b5727，6 项单测过）：用户已试导出一个 4 轮对话成功。待做：再试一个长的带工具调用的对话；然后发已备好的 Codex 指令，把它和 `gemini-quota`（额度脚本+Worker，先提交未提交的修复，基线 5282a0f 之后）挪到 `D:\Projects\scripts\tampermonkey\` 下各一个子目录（用户定的结构：scripts 下按类型分）。注意：导出里“始终允许”点击会作为单独的用户轮出现。
+3. **runabout 记录每次工具调用 + 修 `read_files` 多路径只回最后一个文件**：一起交 Codex，要重建重启，先问用户。Gemini 单轮上限 10–36 次不等，有了日志才好查。
+4. runabout 本地未推送提交（27cc420、3ed1fd2、509a978、9aeee08）：问用户是否推送（容器无凭据，需 Codex 或用户推）。
+5. 自动点 Allow 1.1.1 在真实权限卡上验证。
+6. 试验场可试：Task 模式长任务能否跑更久。
+7. Gravity 6 个仅容器失败的测试（blobRefHook.contract、contextUpstream、gravityBackup、homeAutonomyHook、upstreamFormat、wardrobePickerUI，清单在 runabout deploy/WORKSPACE.md）：未查；试验阶段别把 Gravity 拉进来。
 8. Gravity 手机 APK：下次打包时带上天气修复（网页已上线，11-23 验收）。
+9. 未定：`.evaluation` 46GB（Crescendo 的评测数据）保留/归档/不动。
 
 ## 等用户自己处理（不用催）
+- 额度脚本源码在用户电脑（不在 GitHub），11-25 Codex 修好新旧判断并部署（1.3.1 可选）；修复待提交。
 - `_sandbox` 里的旧试验目录 hello-test、pnpm-check、hello-test2、hello-test3、hello-test4，可挪进回收目录。
 - newapi-checkin 的 `.secret/key.txt`（51 字节，无代码引用）：若是在用令牌就存进密码管理器再挪走。
 - 回收目录 `D:\Projects\_trash\`：用户自己清空。
