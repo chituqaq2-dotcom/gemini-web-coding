@@ -22,7 +22,7 @@
 1. **runabout 批量工具**（11-25）：Codex 已写好 write_files（本机路径，复用 CheckWrite，≤20 个/1MB，先全量校验再写）、read_files（≤20 个）、run_commands（≤10 条，逐条过白名单，stop_on_error，整批超时 3 倍），注册进工具列表并写了单测。已上线：本地提交 3ed1fd2，11-25 01:2x 正常 compose 重建重启（Node 层约 4 分钟，没走备用方案），smoke 34/34，外网 healthz 200。（用本机 golang 1.25 镜像测：gofmt、go vet 通过，internal/tools 113/113；internal 全量另有 1 个既有失败 TestConfirms，root 下 $HOME/.. 判 deny，与本次无关）。本地直连 /mcp 会 401（要 OAuth），Gemini 实测已过（第七版：一轮 6 次调用，6%，见 docs/08）。第七版发现试验场不让 `pnpm pkg`（Gemini 绕道 apply_patch），11-25 10:27 已放行并重启（本地提交 509a978，smoke 34/34，外网 healthz 200），本条完成。
 2. 自动点 Allow 1.1.1 在真实权限卡上验证。
 3. 试验场下一步可试：Task 模式长任务能否跑更久；`git fetch --dry-run` 能否直连 GitHub（能的话简单推拉可不经 Codex）。
-4. 把试验场项目升级为登记项目需要宿主侧 `workspace-project.py add` + 重启，做之前问用户。
+4. **放开 runabout 限制**（11-25 10:58 用户要求，指令已给 Codex，待回报）：去掉命令白名单和项目登记，/workspace 下任意目录可读写、任意命令（含 rm、git push、python -m、pip、pnpm 跑脚本），只保留“容器只挂 D:\Projects”这一道；镜像补 python3-venv/pip；备份 tag runabout:backup-before-open-20261125。完成后改写上面“命令白名单”“登记项目”“试验场”几条和 AGENTS.md 第 3 节相关条目。
 5. Gravity 6 个仅容器失败的测试（blobRefHook.contract、contextUpstream、gravityBackup、homeAutonomyHook、upstreamFormat、wardrobePickerUI，清单在 runabout deploy/WORKSPACE.md）：未查；用户说试验阶段别把 Gravity 拉进来。
 6. Gravity 手机 APK：下次打包时带上天气修复（网页已上线，11-23 验收）。
 
