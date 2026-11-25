@@ -1,6 +1,6 @@
 # 现状与待办（接手时先看这里）
 
-最后更新：2026-11-25 16:50（北京时间）。更早的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
+最后更新：2026-11-25 17:05（北京时间）。更早的逐条流水见 [docs/history/STATUS-2026-11-23至24-流水.md](docs/history/STATUS-2026-11-23至24-流水.md)，只在需要查细节时看。
 
 ## 一句话现状
 整套流程可正常使用：用户在 Gemini 网页（Neon）里 @runabout 写代码、跑测试；Windows/WSL 侧的改动交本地 agent（Codex）；Hark 写指令、判结果、读额度、记账、维护本仓库。11-25 用真实项目 Crescendo-Bid（私有）跑通了“大项目修多处问题”的完整玩法（AGENTS.md §3）：诊断 → 4 个修复各开新对话、先调研后落代码 → 分支 `fix/section7-breaks` 本地 6 个提交（47bd02b、548f6ee、8f1f49e、1671db4、aa9e2e4、c48e818），每个修复相关测试都在容器里跑通，打分 80–92（docs/08）。现在等 Codex 在 Windows 构建前端、补跑测试、启动，然后用户点界面验收。同日还验证了：中文提示词可行（已改为默认）、两个 Gemini 对话可并发做不同项目、Gemini 能独立选型并改造一个油猴脚本（对话导出）。
@@ -19,7 +19,7 @@
 - **自动点 Allow 脚本** userscripts/gemini-auto-allow.user.js 1.1.1（Tampermonkey，按 @updateURL 自动更新）：只点 runabout 卡片的 Always allow。1.0 实测没点；1.1.x 尚未在真实权限卡上验证。失败时请用户贴控制台 `[auto-allow]` 开头的日志。每次点击算一轮额度。
 
 ## 待办（按优先级）
-1. **Crescendo-Bid 收尾**（11-25 16:28 已发 Codex 指令，16:45 仍在跑）：Windows 上 `npm --prefix apps/crescendo run build`（含类型检查）+ 用项目 Windows 虚拟环境（Py3.14）分批跑相关测试 + 启动桌面端。结果回来后：用户点界面验收（A 待填空“写入当前稿”按钮；B PDF 招标补传 Word 入口与不一致 409 弹窗；C 技术部分“保存到本项目”与状态标签；D 投标前检查的“分册 / 压缩”按钮和“AI 对照最新稿查漏”区块）。有类型错误或失败就开新 Gemini 对话修。验收过后：开新对话一次性更新项目自己的文档（status、next、功能文档、链接检查，思考 medium），再由用户决定合并与推送。诊断报告在 `_sandbox/crescendo-diagnosis.md`（第 7 节断点，第 8–11 节各修复）。
+1. **Crescendo-Bid 收尾**（11-25 16:28 已发 Codex 指令；17:01 用户说**已跑完**，结果在用户手里、还没交给 Hark——接手后先向用户要 Codex 的汇报）：Windows 上 `npm --prefix apps/crescendo run build`（含类型检查）+ 用项目 Windows 虚拟环境（Py3.14）分批跑相关测试 + 启动桌面端。结果回来后：用户点界面验收（A 待填空“写入当前稿”按钮；B PDF 招标补传 Word 入口与不一致 409 弹窗；C 技术部分“保存到本项目”与状态标签；D 投标前检查的“分册 / 压缩”按钮和“AI 对照最新稿查漏”区块）。有类型错误或失败就开新 Gemini 对话修。验收过后：开新对话一次性更新项目自己的文档（status、next、功能文档、链接检查，思考 medium），再由用户决定合并与推送。诊断报告在 `_sandbox/crescendo-diagnosis.md`（第 7 节断点，第 8–11 节各修复）。
 2. **对话导出脚本**（11-25 Gemini 完成，基于开源 dikelps/gemini-conversation-exporter MIT 小改，`_sandbox/gemini-export`，本地提交 b4b5727，6 项单测过）：11-25 小改后（9f4beb2，0.1.8-local.2，9 项单测过）用户实测修复 C、D 两个长对话：轮次与“继续”一一对应，“始终允许”轮已合并、占位链接已清干净。发已备好的 Codex 指令，把它和 `gemini-quota`（额度脚本+Worker，先提交未提交的修复，基线 5282a0f 之后）挪到 `D:\Projects\scripts\tampermonkey\` 下各一个子目录（用户定的结构：scripts 下按类型分）。注意：导出里“始终允许”点击会作为单独的用户轮出现。
 3. **runabout 记录每次工具调用 + 修 `read_files` 多路径只回最后一个文件**：一起交 Codex，要重建重启，先问用户。Gemini 单轮上限 10–36 次不等，有了日志才好查。
 4. runabout 本地未推送提交（27cc420、3ed1fd2、509a978、9aeee08）：问用户是否推送（容器无凭据，需 Codex 或用户推）。
